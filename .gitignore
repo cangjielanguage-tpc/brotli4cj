@@ -17,4 +17,9 @@ test/tmp/
 cjpm.lock
 target/
 test_temp/
-test/
+lib/
+libbrotil_c/cmake_install.cmake
+libbrotil_c/CMakeCache.txt
+libbrotil_c/Makefile
+./libbrotli_c/libmybrotli.so
+./libbrotli_c/CMakeFiles/

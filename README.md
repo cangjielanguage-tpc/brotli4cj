@@ -53,8 +53,36 @@ cjpm build
 ```
 
 ### 功能示例
+#### brotli 压缩使用示例
 
-#### brotli 使用示例
+```cangjie
+import std.io.*
+import std.collection.*
+import std.env.*
+import std.unittest.*
+import std.unittest.testmacro.*
+import stdx.encoding.json.*
+
+@TestCase
+public func test1(): Unit {
+    let str = "this"
+    let bytes = str.toArray() // [116, 104, 105, 115]
+    var param: Encoder_Parameters = Encoder_Parameters()
+    param.setQuality(11)
+    param.setWindow(22)
+    var bytes2 = Encoder.compress(bytes, param)
+    var rightBytes = [139, 1, 128, 116, 104, 105, 115, 3]
+    @Assert(bytes2.toString(), rightBytes.toString())
+}
+
+```
+
+运行结果如下：
+
+```cangjie
+PASSED
+```
+#### brotli 解压使用示例
 
 ```cangjie
 import std.io.*

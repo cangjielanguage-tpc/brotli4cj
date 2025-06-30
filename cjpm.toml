@@ -17,6 +17,11 @@
     [target.x86_64-w64-mingw32.bin-dependencies]
       path-option = [ "${CANGJIE_STDX_PATH}/windows_x86_64_llvm/dynamic/stdx" ]
 
+[ffi.c]
+  brotlicommon = {path = "./lib/"}
+  brotliffi = {path = "./lib/"}
+  brotlienc = {path = "./lib/"}
+
 [package]
   cjc-version = "0.60.5"
   compile-option = "-O2 --int-overflow=wrapping --warn-off all"
