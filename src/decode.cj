@@ -1062,7 +1062,7 @@ class Decode {
                     }
                     var distanceCode = s.distanceCode
                     if (distanceCode < 0) {
-                        distanceCode = Int32(s.rings[Int64(s.distRbIdx)])
+                        s.distance = Int32(s.rings[Int64(s.distRbIdx)])
                     } else {
                         BitReader.readMoreInput(s)
                         if (s.distanceBlockLength == 0) {
