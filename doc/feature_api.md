@@ -21,7 +21,7 @@
 ###### class BrotliInputStream
 
 ```cangjie
-public class BrotliInputStream { 
+public class BrotliInputStream {
     /*
      * 将流 source 中以brotli格式压缩的数据，进行解压前的初始化
      * 
@@ -126,4 +126,157 @@ main() {
 
 ```cangjie
 0
+```
+
+
+#### 1.1 Brotli 压缩功能
+
+##### 1.1.1 主要接口
+
+###### class BrotliOutputStream
+
+```cangjie
+public class BrotliOutputStream <: OutputStream {
+    /*
+     * 封装输出流 初始化压缩流BrotliOutputStream
+     * 
+     * 参数 destination - 输出流
+     * 参数 params - 压缩配置类
+     * 参数 bufferSize - 缓冲字节大小
+     */
+    public init(destination: OutputStream, params: Encoder_Parameters, bufferSize: Int64)
+
+    /*
+     * 封装输出流 初始化压缩流BrotliOutputStream
+     * 
+     * 参数 destination - 输出流
+     * 参数 params - 压缩配置类
+     */
+    public init(destination: OutputStream, params: Encoder_Parameters)
+
+    /*
+     * 封装输出流 初始化压缩流BrotliOutputStream
+     * 
+     * 参数 destination - 输出流
+     */
+    public init(destination: OutputStream)
+
+    /*
+     * 配置自定义字典
+     * 
+     * 参数 dictionary - 字典
+     */
+    public func attachDictionary(dictionary: PreparedDictionary): Unit
+
+    /*
+     * 关闭压缩流BrotliOutputStream
+     * 
+     */
+    public func close(): Unit
+
+    /*
+     * 向压缩流中写入压缩数据
+     * 
+     * 参数 data - 待压缩数据
+     */
+    public override func write(data: Array<UInt8>): Unit
+
+    /*
+     * 向压缩流中写入压缩数据
+     * 
+     * 参数 data - 待压缩数据
+     * 参数 off - 待压缩数据起始位置
+     * 参数 len - 待压缩数据长度
+     */
+    public func write(data: Array<UInt8>, off: Int64, len: Int64): Unit
+}
+```
+
+```cangjie
+public open class Encoder {
+
+    /*
+     * 压缩核心方法
+     * 
+     * 参数 data - 待压缩数据
+     * 参数 offset - 待压缩数据起始位置
+     * 参数 length - 待压缩数据长度
+     * 参数 params - 压缩配置类
+     */
+    public static func compress(data: Array<UInt8>, offset: Int64, length: Int64, params: Encoder_Parameters): Array<UInt8> 
+
+    /*
+     * 压缩核心方法
+     * 
+     * 参数 data - 待压缩数据
+     * 参数 offset - 待压缩数据起始位置
+     * 参数 length - 待压缩数据长度
+     */
+    public static func compress(data: Array<UInt8>, offset: Int64, length: Int64): Array<UInt8>
+
+    /*
+     * 压缩核心方法
+     * 
+     * 参数 data - 待压缩数据
+     * 参数 params - 压缩配置类
+     */
+    public static func compress(data: Array<UInt8>, params: Encoder_Parameters): Array<UInt8> 
+
+    /*
+     * 压缩核心方法
+     * 
+     * 参数 data - 待压缩数据
+     */
+    public static func compress(data: Array<UInt8>): Array<UInt8> 
+
+    /*
+     * 准备配置自定义字典
+     * 
+     * 参数 dictionary - 字典
+     * 参数 sharedDictionaryType - 字典类型
+     */
+    public static func prepareDictionary(dictionary: ByteBuffer, sharedDictionaryType: Int64): PreparedDictionary
+}
+```
+
+```cangjie
+public class Encoder_Parameters {
+    /*
+     * 压缩配置类
+     */
+    public init()
+
+    /*
+     * 设置压缩质量 
+     * 
+     * 参数 quality - 压缩质量  压缩级别 (0-11，默认4)
+     */
+    public func setQuality(quality: Int64): Encoder_Parameters
+
+    /*
+     * 设置压缩窗口大小
+     * 
+     * 参数 lgwin - 窗口大小  窗口大小 (10-24，默认22)
+     */
+    public func setWindow(lgwin: Int64): Encoder_Parameters
+
+    /*
+     * 压缩模式
+     * 
+     * 参数 mode - 模式
+     */
+    public func setMode(mode: EMODE): Encoder_Parameters
+
+}
+```
+
+```cangjie
+public enum EMODE {
+    | GENERIC 
+
+    | TEXT
+
+    | FONT
+
+}
 ```
