@@ -222,6 +222,11 @@ public class Encoder_Parameters {
     public init() {
 
     }
+    public init(quality: Int64, lgwin: Int64, mode: EMODE) {
+        this.quality = quality
+        this.lgwin = lgwin
+        this.mode = mode
+    }
 
     public init(other: Encoder_Parameters) {
         this.quality = other.quality
