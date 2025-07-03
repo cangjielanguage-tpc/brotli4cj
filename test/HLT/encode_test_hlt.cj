@@ -160,6 +160,245 @@ public class EncodeTestHLT {
         @Assert(bytes2.size, 367)
         @Assert(fbytes.size, 581)
     }
+
+    @TestCase
+    public func test12(): Unit {
+        let jsonStr = "{\"description\": \"Brotli 是一种基于 LZ77 和 Huffman 编码的压缩算法，由 Google 开发，特别适合压缩文本数据。它通过预定义的静态字典和动态字典优化，显著提升压缩效率。\",\"features\": [\"高压缩率(比 Gzip 高 20%-30%)\",\"中等压缩速度\",\"支持流式压缩\",\"内置常用词汇字典\",\"适合 HTTP 内容压缩\"],\"usage_scenarios\": [\"Web 静态资源(HTML/CSS/J)\",\"API 响应(JSON/XML)\",\"移动应用数据传输\",\"日志文件存储\"],\"example_repeat_pattern\": \"Brotli Brotli Brotli 压缩 压缩 压缩 算法 算法 算法\"}" 
+        var fbytes  = jsonStr.toArray()
+
+        var input = ByteBuffer(fbytes)
+        var inFile = BufferedInputStream(input)
+
+        var outFile: ByteBuffer = ByteBuffer()
+        var tempBuf: Array<UInt8> = Array<UInt8>(1024, repeat: 0)
+        var brotliOutputStream: BrotliOutputStream = BrotliOutputStream(outFile)
+        while (true) {
+            var readNum = inFile.read(tempBuf)
+            if (readNum > 0) {
+                brotliOutputStream.write(tempBuf.slice(0, readNum))
+            } else {
+                break
+            }
+        }
+        brotliOutputStream.close()
+        var zBytes = readToEnd(outFile)
+        var javabytes: Array<Int8> = [27, 68, 2, 32, -84, 14, 120, 67, -22, -106, 91, 38, -16, 67, 61, -3, 33, 111, -86, 90, 80, 88, 5, 111, -17, 73, 122, 47, 84, -88, -56, -124, 6, 35, 28, 24, -10, 126, -46, 82, -121, 109, 27, -5, -102, 21, -88, -33, 77, 126, 90, -97, -93, 57, 90, 26, -58, -97, -38, -37, 78, 81, 28, -3, 36, 112, -56, -95, 126, 59, 73, -100, 120, 82, -77, 8, 117, -11, 73, -99, -106, 20, -8, -81, 110, -64, -4, -9, -34, -55, 93, 73, -128, 117, -29, -63, -30, 65, -77, 64, -95, -42, 52, 1, 21, 39, -110, 109, 54, 28, 123, -20, -67, 80, 43, 109, -98, -10, -119, -126, -10, -65, 116, -1, 66, 74, -66, -13, -89, -64, -42, -40, 23, -108, -110, 39, 124, -6, 17, 42, -43, 90, -96, 112, -27, 55, -58, -86, 27, 1, 70, 34, 56, 14, -122, -64, 6, -44, 25, 76, -81, -6, 5, 92, -76, -7, 29, -48, 32, 84, 108, -46, 2, 21, -123, 61, -100, 13, -46, 94, 7, 74, -73, 32, -124, 1, -123, -35, -57, -109, 96, 12, 78, -33, 116, 28, -20, -8, -74, 33, -104, -34, 4, -65, 80, 56, -104, -118, -13, -82, -127, 5, 103, 92, -64, -39, -6, -73, 108, 90, -108, -32, -55, -125, -33, -23, 84, 4, 114, 65, -120, -112, -97, 29, -87, 79, -89, -75, -108, 52, 14, -122, 71, -83, -36, -27, 66, -80, 42, -125, -38, -23, 34, 77, -11, -43, -89, -89, 85, 73, -5, -30, -125, 126, -25, 29, 6, -120, 82, -47, 3, 8, 60, -33, -64, 117, 69, -85, -10, -56, 123, 38, -83, 83, -61, 87, -69, -25, 39, 7, -48, 22, 53, 21, 4, -107, -97, 32, 105, -11, -55, -23, -19, -19, 13, -2, -14, 67, 50, 45, 116, -46, 23, 60, -105, 104, -42, -39, -109, 80, -88, 60, -113, 54, 112, 49, -21, -110, -109, -124, 26, 65, 94, -28, 90, -10, 13, -94, -3, -85, 66, -123, -113, -52, 70, -11, -73, -77, 103, -8, 14, 28, 99, 35, -121, -26, 118, -39, -125, 45, -52, -114, -120, -107, 14, 104, -46]
+        var javabytes2: Array<UInt8> = Int8ToUInt8(javabytes)
+        @Assert(javabytes2, zBytes)
+
+    }
+
+    @TestCase
+    public func test13(): Unit {
+        let jsonStr = "{\"description\": \"Brotli 是一种基于 LZ77 和 Huffman 编码的压缩算法，由 Google 开发，特别适合压缩文本数据。它通过预定义的静态字典和动态字典优化，显著提升压缩效率。\",\"features\": [\"高压缩率(比 Gzip 高 20%-30%)\",\"中等压缩速度\",\"支持流式压缩\",\"内置常用词汇字典\",\"适合 HTTP 内容压缩\"],\"usage_scenarios\": [\"Web 静态资源(HTML/CSS/J)\",\"API 响应(JSON/XML)\",\"移动应用数据传输\",\"日志文件存储\"],\"example_repeat_pattern\": \"Brotli Brotli Brotli 压缩 压缩 压缩 算法 算法 算法\"}" 
+        var fbytes  = jsonStr.toArray()
+
+        var input = ByteBuffer(fbytes)
+        var inFile = BufferedInputStream(input)
+
+        var outFile: ByteBuffer = ByteBuffer()
+        var tempBuf: Array<UInt8> = Array<UInt8>(1024, repeat: 0)
+        var param: Encoder_Parameters = Encoder_Parameters()
+        param.setQuality(0)
+        param.setWindow(10)
+        var brotliOutputStream: BrotliOutputStream = BrotliOutputStream(outFile, param)
+        while (true) {
+            var readNum = inFile.read(tempBuf)
+            if (readNum > 0) {
+                brotliOutputStream.write(tempBuf.slice(0, readNum))
+            } else {
+                break
+            }
+        }
+        brotliOutputStream.close()
+        var zBytes = readToEnd(outFile)
+        @Assert(zBytes.size, 578)
+    }
+
+    @TestCase
+    public func test14(): Unit {
+        let jsonStr = "{\"description\": \"Brotli 是一种基于 LZ77 和 Huffman 编码的压缩算法，由 Google 开发，特别适合压缩文本数据。它通过预定义的静态字典和动态字典优化，显著提升压缩效率。\",\"features\": [\"高压缩率(比 Gzip 高 20%-30%)\",\"中等压缩速度\",\"支持流式压缩\",\"内置常用词汇字典\",\"适合 HTTP 内容压缩\"],\"usage_scenarios\": [\"Web 静态资源(HTML/CSS/J)\",\"API 响应(JSON/XML)\",\"移动应用数据传输\",\"日志文件存储\"],\"example_repeat_pattern\": \"Brotli Brotli Brotli 压缩 压缩 压缩 算法 算法 算法\"}" 
+        var fbytes  = jsonStr.toArray()
+
+        var input = ByteBuffer(fbytes)
+        var inFile = BufferedInputStream(input)
+
+        var outFile: ByteBuffer = ByteBuffer()
+        var tempBuf: Array<UInt8> = Array<UInt8>(1024, repeat: 0)
+        var param: Encoder_Parameters = Encoder_Parameters()
+        param.setQuality(11)
+        param.setWindow(22)
+        var brotliOutputStream: BrotliOutputStream = BrotliOutputStream(outFile, param)
+        while (true) {
+            var readNum = inFile.read(tempBuf)
+            if (readNum > 0) {
+                brotliOutputStream.write(tempBuf.slice(0, readNum))
+            } else {
+                break
+            }
+        }
+        brotliOutputStream.close()
+        var zBytes = readToEnd(outFile)
+        @Assert(zBytes.size, 367)
+    }
+
+    @TestCase
+    public func test15(): Unit {
+        let jsonStr = ""
+        var fbytes  = jsonStr.toArray()
+
+        var input = ByteBuffer(fbytes)
+        var inFile = BufferedInputStream(input)
+
+        var outFile: ByteBuffer = ByteBuffer()
+        var tempBuf: Array<UInt8> = Array<UInt8>(1024, repeat: 0)
+        var param: Encoder_Parameters = Encoder_Parameters()
+        param.setQuality(11)
+        param.setWindow(22)
+        var brotliOutputStream: BrotliOutputStream = BrotliOutputStream(outFile, param)
+        while (true) {
+            var readNum = inFile.read(tempBuf)
+            if (readNum > 0) {
+                brotliOutputStream.write(tempBuf.slice(0, readNum))
+            } else {
+                break
+            }
+        }
+        brotliOutputStream.close()
+        var zBytes = readToEnd(outFile)
+        var jByte: Array<UInt8> = [59]
+        @Assert(zBytes, jByte)
+    }
+
+    @TestCase
+    public func test16(): Unit {
+        let jsonStr = ""
+        var fbytes  = jsonStr.toArray()
+
+        var input = ByteBuffer(fbytes)
+        var inFile = BufferedInputStream(input)
+
+        var outFile: ByteBuffer = ByteBuffer()
+        var tempBuf: Array<UInt8> = Array<UInt8>(1024, repeat: 0)
+        var brotliOutputStream: BrotliOutputStream = BrotliOutputStream(outFile)
+        while (true) {
+            var readNum = inFile.read(tempBuf)
+            if (readNum > 0) {
+                brotliOutputStream.write(tempBuf.slice(0, readNum))
+            } else {
+                break
+            }
+        }
+        brotliOutputStream.close()
+        var zBytes = readToEnd(outFile)
+        var jByte: Array<UInt8> = [59]
+        @Assert(zBytes, jByte)
+    }
+
+    @TestCase
+    public func test17(): Unit {
+        let jsonStr = ""
+        var fbytes  = jsonStr.toArray()
+
+        var input = ByteBuffer(fbytes)
+        var inFile = BufferedInputStream(input)
+
+        var outFile: ByteBuffer = ByteBuffer()
+        var tempBuf: Array<UInt8> = Array<UInt8>(1024, repeat: 0)
+        var param: Encoder_Parameters = Encoder_Parameters()
+        param.setQuality(11)
+        param.setWindow(22)
+        var brotliOutputStream: BrotliOutputStream = BrotliOutputStream(outFile, param, 1064)
+        while (true) {
+            var readNum = inFile.read(tempBuf)
+            if (readNum > 0) {
+                brotliOutputStream.write(tempBuf.slice(0, readNum))
+            } else {
+                break
+            }
+        }
+        brotliOutputStream.close()
+        var zBytes = readToEnd(outFile)
+        var jByte: Array<UInt8> = [59]
+        @Assert(zBytes, jByte)
+    }
+
+    @TestCase
+    public func test18(): Unit {
+        try {
+            let jsonStr = ""
+            var fbytes  = jsonStr.toArray()
+
+            var input = ByteBuffer(fbytes)
+            var inFile = BufferedInputStream(input)
+
+            var outFile: ByteBuffer = ByteBuffer()
+            var tempBuf: Array<UInt8> = Array<UInt8>(1024, repeat: 0)
+            var param: Encoder_Parameters = Encoder_Parameters()
+            param.setQuality(11)
+            param.setWindow(22)
+            var brotliOutputStream: BrotliOutputStream = BrotliOutputStream(outFile, param, 0)
+        } catch (e: IllegalArgumentException) {
+            @Assert(e.toString().contains("buffer size must be positive"), true)      
+        }
+    }
+
+    @TestCase
+    public func test19(): Unit {
+        let jsonStr = ""
+        var fbytes  = jsonStr.toArray()
+
+        var input = ByteBuffer(fbytes)
+        var inFile = BufferedInputStream(input)
+
+        var outFile: ByteBuffer = ByteBuffer()
+        var tempBuf: Array<UInt8> = Array<UInt8>(1024, repeat: 0)
+        var param: Encoder_Parameters = Encoder_Parameters()
+        param.setQuality(11)
+        param.setWindow(22)
+        var brotliOutputStream: BrotliOutputStream = BrotliOutputStream(outFile, param, 1)
+        while (true) {
+            var readNum = inFile.read(tempBuf)
+            if (readNum > 0) {
+                brotliOutputStream.write(tempBuf.slice(0, readNum))
+            } else {
+                break
+            }
+        }
+        brotliOutputStream.close()
+        var zBytes = readToEnd(outFile)
+        var jByte: Array<UInt8> = [59]
+        @Assert(zBytes, jByte)
+    }
+
+    @TestCase
+    public func test20(): Unit {
+        let jsonStr = "{\"description\": \"Brotli 是一种基于 LZ77 和 Huffman 编码的压缩算法，由 Google 开发，特别适合压缩文本数据。它通过预定义的静态字典和动态字典优化，显著提升压缩效率。\",\"features\": [\"高压缩率(比 Gzip 高 20%-30%)\",\"中等压缩速度\",\"支持流式压缩\",\"内置常用词汇字典\",\"适合 HTTP 内容压缩\"],\"usage_scenarios\": [\"Web 静态资源(HTML/CSS/J)\",\"API 响应(JSON/XML)\",\"移动应用数据传输\",\"日志文件存储\"],\"example_repeat_pattern\": \"Brotli Brotli Brotli 压缩 压缩 压缩 算法 算法 算法\"}" 
+        var fbytes  = jsonStr.toArray()
+
+        var input = ByteBuffer(fbytes)
+        var inFile = BufferedInputStream(input)
+
+        var outFile: ByteBuffer = ByteBuffer()
+        var tempBuf: Array<UInt8> = Array<UInt8>(1024, repeat: 0)
+        var param: Encoder_Parameters = Encoder_Parameters()
+        param.setQuality(11)
+        param.setWindow(22)
+        var brotliOutputStream: BrotliOutputStream = BrotliOutputStream(outFile, param)
+        while (true) {
+            var readNum = inFile.read(tempBuf)
+            if (readNum > 0) {
+                // brotliOutputStream.write(tempBuf.slice(0, readNum))
+                brotliOutputStream.write(tempBuf.slice(0, readNum), 0, readNum)
+            } else {
+                break
+            }
+        }
+        brotliOutputStream.close()
+        var zBytes = readToEnd(outFile)
+        @Assert(zBytes.size, 367)
+    }
+
     @OverflowWrapping
     func Int8ToUInt8(arr: Array<Int8>): Array<UInt8> {
         var res: Array<UInt8> = Array<UInt8>(arr.size, repeat: 0)
