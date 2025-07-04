@@ -319,6 +319,141 @@ public class DecodeTestHLT {
         @Assert(EMODE.valueOf(0) == emode, false)
     }
 
+    @TestCase
+    public func test26(): Unit {
+        var compressData0: Array<Int8> = [-117, 1, -128, 108, 104, 106, 116, 3]
+        var compressData1: Array<UInt8> =  Int8ToUInt8(compressData0)
+        let actual: Array<UInt8> = decompress(compressData1, false)
+        let expectedBytes: Array<UInt8> = "lhjt".toArray()
+        @Assert(actual, expectedBytes)
+    }
+
+    @TestCase
+    public func test27(): Unit {
+        var compressData0: Array<Int8> = [11, 2, -128, 108, 99, 121, 57, 114, 3]
+        var compressData1: Array<UInt8> =  Int8ToUInt8(compressData0)
+        let actual: Array<UInt8> = decompress(compressData1, false)
+        let expectedBytes: Array<UInt8> = "lcy9r".toArray()
+        @Assert(actual, expectedBytes)
+    }
+
+    @TestCase
+    public func test28(): Unit {
+        var compressData0: Array<Int8> = [-117, 2, -128, 108, 121, 79, 84, 111, 99, 3]
+        var compressData1: Array<UInt8> =  Int8ToUInt8(compressData0)
+        let actual: Array<UInt8> = decompress(compressData1, false)
+        let expectedBytes: Array<UInt8> = "lyOToc".toArray()
+        @Assert(actual, expectedBytes)
+    }
+
+    @TestCase
+    public func test29(): Unit {
+        var compressData0: Array<Int8> = [11, 3, -128, 108, 67, 67, 54, 85, 50, 65, 3]
+        var compressData1: Array<UInt8> =  Int8ToUInt8(compressData0)
+        let actual: Array<UInt8> = decompress(compressData1, false)
+        let expectedBytes: Array<UInt8> = "lCC6U2A".toArray()
+        @Assert(actual, expectedBytes)
+    }
+
+    @TestCase
+    public func test30(): Unit {
+        var compressData0: Array<Int8> = [-117, 3, -128, 108, 77, 111, 100, 80, 115, 50, 75, 3]
+        var compressData1: Array<UInt8> =  Int8ToUInt8(compressData0)
+        let actual: Array<UInt8> = decompress(compressData1, false)
+        let expectedBytes: Array<UInt8> = "lModPs2K".toArray()
+        @Assert(actual, expectedBytes)
+    }
+
+    @TestCase
+    public func test31(): Unit {
+        var compressData0: Array<Int8> = [11, 4, -128, 108, 102, 98, 101, 69, 74, 99, 106, 112, 3]
+        var compressData1: Array<UInt8> =  Int8ToUInt8(compressData0)
+        let actual: Array<UInt8> = decompress(compressData1, false)
+        let expectedBytes: Array<UInt8> = "lfbeEJcjp".toArray()
+        @Assert(actual, expectedBytes)
+    }
+
+    @TestCase
+    public func test32(): Unit {
+        var compressData0: Array<Int8> = [-117, 4, -128, 108, 72, 100, 49, 68, 79, 65, 89, 116, 74, 3]
+        var compressData1: Array<UInt8> =  Int8ToUInt8(compressData0)
+        let actual: Array<UInt8> = decompress(compressData1, false)
+        let expectedBytes: Array<UInt8> = "lHd1DOAYtJ".toArray()
+        @Assert(actual, expectedBytes)
+    }
+
+    @TestCase
+    public func test33(): Unit {
+        var compressData0: Array<Int8> = [-117, 6, -128, 113, 71, 104, 112, 101, 111, 79, 78, 48, 118, 113, 73, 105, 55, 3]
+        var compressData1: Array<UInt8> =  Int8ToUInt8(compressData0)
+        let actual: Array<UInt8> = decompress(compressData1, false)
+        let expectedBytes: Array<UInt8> = "qGhpeoON0vqIi7".toArray()
+        @Assert(actual, expectedBytes)
+    }
+
+    @TestCase
+    public func test34(): Unit {
+        var compressData0: Array<Int8> = [11, 7, -128, 113, 86, 122, 84, 76, 118, 56, 122, 69, 56, 107, 48, 66, 87, 117, 3]
+        var compressData1: Array<UInt8> =  Int8ToUInt8(compressData0)
+        let actual: Array<UInt8> = decompress(compressData1, false)
+        let expectedBytes: Array<UInt8> = "qVzTLv8zE8k0BWu".toArray()
+        @Assert(actual, expectedBytes)
+    }
+
+    @TestCase
+    public func test35(): Unit {
+        var compressData0: Array<Int8> = [11, 2, -128, 114, 88, 72, 102, 70, 3]
+        var compressData1: Array<UInt8> =  Int8ToUInt8(compressData0)
+        let actual: Array<UInt8> = decompress(compressData1, false)
+        let expectedBytes: Array<UInt8> = "rXHfF".toArray()
+        @Assert(actual, expectedBytes)
+    }
+
+    @TestCase
+    public func test36(): Unit {
+        var compressData0: Array<Int8> = [11, 3, -128, 114, 100, 67, 98, 122, 50, 115, 3]
+        var compressData1: Array<UInt8> =  Int8ToUInt8(compressData0)
+        let actual: Array<UInt8> = decompress(compressData1, false)
+        let expectedBytes: Array<UInt8> = "rdCbz2s".toArray()
+        @Assert(actual, expectedBytes)
+    }
+
+    @TestCase
+    public func test37(): Unit {
+        var compressData0: Array<Int8> = [-117, 6, -128, 114, 112, 122, 85, 113, 80, 117, 107, 54, 122, 56, 76, 71, 72, 3]
+        var compressData1: Array<UInt8> =  Int8ToUInt8(compressData0)
+        let actual: Array<UInt8> = decompress(compressData1, false)
+        let expectedBytes: Array<UInt8> = "rpzUqPuk6z8LGH".toArray()
+        @Assert(actual, expectedBytes)
+    }
+
+    @TestCase
+    public func test38(): Unit {
+        var compressData0: Array<Int8> = [11, 1, -128, 115, 87, 113, 3]
+        var compressData1: Array<UInt8> =  Int8ToUInt8(compressData0)
+        let actual: Array<UInt8> = decompress(compressData1, false)
+        let expectedBytes: Array<UInt8> = "sWq".toArray()
+        @Assert(actual, expectedBytes)
+    }
+
+    @TestCase
+    public func test39(): Unit {
+        var compressData0: Array<Int8> = [11, 2, -128, 115, 112, 51, 86, 55, 3]
+        var compressData1: Array<UInt8> =  Int8ToUInt8(compressData0)
+        let actual: Array<UInt8> = decompress(compressData1, false)
+        let expectedBytes: Array<UInt8> = "sp3V7".toArray()
+        @Assert(actual, expectedBytes)
+    }
+
+    @TestCase
+    public func test40(): Unit {
+        var compressData0: Array<Int8> = [-117, 2, -128, 115, 108, 75, 109, 111, 107, 3]
+        var compressData1: Array<UInt8> =  Int8ToUInt8(compressData0)
+        let actual: Array<UInt8> = decompress(compressData1, false)
+        let expectedBytes: Array<UInt8> = "slKmok".toArray()
+        @Assert(actual, expectedBytes)
+    }
+
     @OverflowWrapping
     func Int8ToUInt8(arr: Array<Int8>): Array<UInt8> {
         var res: Array<UInt8> = Array<UInt8>(arr.size, repeat: 0)
