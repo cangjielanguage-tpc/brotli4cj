@@ -23,15 +23,15 @@
   brotlienc = {path = "./lib/"}
 
 [package]
-  cjc-version = "0.60.5"
-  compile-option = "-O2 --int-overflow=wrapping --warn-off all"
+  cjc-version = "1.0.0"
+  compile-option = "-O2 --int-overflow=wrapping --warn-off unused"
   description = "CangjieUI Application"
   link-option = ""
   name = "brotli4cj"
   output-type = "dynamic"
   src-dir = "src"
   target-dir = ""
-  version = "1.0.2"
+  version = "1.0.1"
   [package.package-configuration]
   [package.scripts]
 
