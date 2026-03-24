@@ -1,0 +1,9 @@
+{
+  "module": {
+    "name": "brotli",
+    "type": "har",
+    "deviceTypes": [
+      "default"
+    ]
+  }
+}

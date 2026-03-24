@@ -1,0 +1,26 @@
+{
+  "apiType": "stageMode",
+  "buildOption": {
+    "externalNativeOptions": {
+      "path": "./src/main/cpp/CMakeLists.txt",
+      "arguments": "--log-level=verbose -DOHOS_STL=c++_shared -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS='-s' -DCMAKE_CXX_FLAGS='-s'",
+      "cppFlags": "-fstack-protector-strong",
+      "abiFilters": [
+         "x86_64"
+      ]
+    },
+    "cangjieOptions": {
+      "path": "./cjpm.toml"
+    }
+  },
+  "buildOptionSet": [
+  ],
+  "targets": [
+    {
+      "name": "default"
+    },
+    {
+      "name": "ohosTest"
+    }
+  ]
+}
