@@ -2,10 +2,14 @@ cmake_minimum_required(VERSION 3.28)
 
 project(brotliffi)
 
-message(STATUS "We are working on ohos")
+# Add subdirectories
+add_subdirectory(common)
+add_subdirectory(enc)
 
 # Collect ffi source files
 file(GLOB BROTLIFFI_SOURCES "./*.c")
+
+message(STATUS "We are working on ohos")
 
 # Build libbrotliffi.so
 add_library(brotliffi SHARED ${BROTLIFFI_SOURCES})
@@ -16,8 +20,7 @@ target_include_directories(brotliffi PRIVATE
     ./enc
 )
 
-# 使用预编译的 brotlienc 和 brotlicommon 库
-target_link_directories(brotliffi PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/lib)
+# Link with brotlienc and brotlicommon (built from source)
 target_link_libraries(brotliffi PRIVATE brotlienc brotlicommon)
 
 # Strip symbols in Release build
