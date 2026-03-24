@@ -6,11 +6,12 @@
       "arguments": "--log-level=verbose -DOHOS_STL=c++_shared -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS='-s' -DCMAKE_CXX_FLAGS='-s'",
       "cppFlags": "-fstack-protector-strong",
       "abiFilters": [
-         "x86_64"
+        "arm64-v8a", "x86_64"
       ]
     },
     "cangjieOptions": {
-      "path": "./cjpm.toml"
+      "path": "./cjpm.toml",
+      "abiFilters": ["arm64-v8a", "x86_64"]
     }
   },
   "buildOptionSet": [

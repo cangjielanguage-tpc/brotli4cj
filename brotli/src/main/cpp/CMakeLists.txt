@@ -2,23 +2,36 @@ cmake_minimum_required(VERSION 3.28)
 
 project(brotliffi)
 
-# Add subdirectories
-add_subdirectory(common)
-add_subdirectory(enc)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Collect ffi source files
 file(GLOB BROTLIFFI_SOURCES "./*.c")
 
+# Add subdirectories
+add_subdirectory(common)
+add_subdirectory(enc)
+
+
+
 message(STATUS "We are working on ohos")
+
+
+
+#target_include_directories(brotliffi PRIVATE
+#    ./include
+#    ./common
+#    ./enc
+#)
+
+include_directories(
+    "./include"
+    "./enc"
+    "./common"
+)
 
 # Build libbrotliffi.so
 add_library(brotliffi SHARED ${BROTLIFFI_SOURCES})
-
-target_include_directories(brotliffi PRIVATE
-    ./include
-    ./common
-    ./enc
-)
 
 # Link with brotlienc and brotlicommon (built from source)
 target_link_libraries(brotliffi PRIVATE brotlienc brotlicommon)
