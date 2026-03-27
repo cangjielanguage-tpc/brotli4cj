@@ -5,7 +5,6 @@
 package brotli4cj
 
 import std.io.*
-import std.reflect.*
 
 public class Dictionary {
 

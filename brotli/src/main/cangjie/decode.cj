@@ -4,10 +4,6 @@
 
 package brotli4cj
 
-import std.io.*
-import std.ast.*
-import std.math.*
-
 class Decode {
 
     static let MIN_LARGE_WINDOW_BITS: Int32 = 10

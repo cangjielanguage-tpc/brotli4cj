@@ -4,8 +4,6 @@
 
 package brotli4cj
 
-import std.io.*
-
 public class BitReader {
 
     private static let LOG_BITNESS: Int32 = Utils.getLogBintness()
