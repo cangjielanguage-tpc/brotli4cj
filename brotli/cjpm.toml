@@ -15,6 +15,10 @@
   [ffi.c]
     [ffi.c.brotliffi]
       path = "./libs/${ABI}"
+    [ffi.c.brotlicommon]
+      path = "./libs/${ABI}"
+    [ffi.c.brotlienc]
+      path = "./libs/${ABI}"
 
 [profile]
   build = {incremental = true, lto = ""}
