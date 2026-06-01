@@ -149,7 +149,7 @@ public class State {
 
     var cdBlockMap: Array<UInt8> = []
 
-    var input: ByteBuffer = Utils.makeEmptyInput()
+    var input: InputStream = Utils.makeEmptyInput()
 
     init() {
         this.ringBuffer = Array<UInt8>(0) { _ => 0 }

@@ -46,32 +46,24 @@ public class Utils {
             if (offset < 0 || length < 0 || Int64(offset + length) > dst.size) {
                 throw BrotliRuntimeException("Failed to read input")
             }
-            var value = s.input.readByte()
-            if (value == None) {
+            let readLen = s.input.read(dst[Int64(offset)..Int64(offset + length)])
+            if (readLen <= 0) {
                 return -1
             }
-            dst[Int64(offset)] = value.getOrThrow()
-            var i:Int32 = 1
-            while (i < length) {
-                var value = s.input.readByte()
-                if (value == None) {
-                    break
-                }
-                dst[Int64(offset + i)] = value.getOrThrow()
-                i++
-            }
-            return i
+            return Int32(readLen)
         } catch (e: IOException) {
             throw BrotliRuntimeException("Failed to read input", e)
         }
     }
 
-    static func makeEmptyInput(): ByteBuffer {
-        return ByteBuffer(Array<UInt8>(0) { _ => 0 })
+    static func makeEmptyInput(): InputStream {
+        return EmptyInputStream()
     }
 
     static func closeInput(s: State): Unit {
-        s.input.clear()
+        if (let Some(resource) <- (s.input as Resource)) {
+            resource.close()
+        }
         s.input = makeEmptyInput()
     }
     
@@ -180,5 +172,11 @@ public class Utils {
             newArray[i] = newByteBuffer[i]
         }
         return newArray
+    }
+}
+
+class EmptyInputStream <: InputStream {
+    public func read(dest: Array<Byte>): Int64 {
+        return 0
     }
 }

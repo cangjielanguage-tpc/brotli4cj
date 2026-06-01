@@ -7,11 +7,11 @@ package brotli4cj
 import std.io.*
 
 /**
- * {@link ByteBuffer} decorator that decompresses brotli data.
+ * {@link InputStream} / {@link ByteBuffer} decorator that decompresses brotli data.
  *
  * <p> Not thread-safe.
  */
-public class BrotliInputStream {
+public class BrotliInputStream <: InputStream & Resource {
     public static let DEFAULT_INTERNAL_BUFFER_SIZE: Int32 = 256
 
     private static let END_OF_STREAM_MARKER: Int32 = -1
@@ -22,24 +22,25 @@ public class BrotliInputStream {
 
     private var bufferOffset: Int32 = 0
 
+    private let byteReadBufferSize: Int32
+
     private let state = State()
 
-    public init(source: ByteBuffer) {
+    private var closed: Bool = false
+
+    public init(source: InputStream) {
         this(source, DEFAULT_INTERNAL_BUFFER_SIZE)
     }
 
-    public init(source: ByteBuffer, byteReadBufferSize: Int32) {
+    public init(source: InputStream, byteReadBufferSize: Int32) {
         if (byteReadBufferSize <= 0) {
             throw IllegalArgumentException("Bad buffer size:" + byteReadBufferSize.toString())
-        } else if (source.length == 0) {
-            throw IllegalArgumentException("source is null")
         }
-        this.buffer = Array<UInt8>(Int64(byteReadBufferSize)) { _ => 0 }
+        this.byteReadBufferSize = byteReadBufferSize
         this.remainingBufferBytes = 0
         this.bufferOffset = 0
         try {
             state.input = source
-            var asddd: Byte = 0xC2
             Decode.initState(state)
         } catch (ex: BrotliRuntimeException) {
             throw IOException("Brotli decoder initialization failed")
@@ -59,10 +60,27 @@ public class BrotliInputStream {
     }
 
     public func close(): Unit {
+        if (closed) {
+            return
+        }
         Decode.close(state)
+        if (let Some(resource) <- (state.input as Resource)) {
+            resource.close()
+        }
+        closed = true
+    }
+
+    public func isClosed(): Bool {
+        return closed
     }
 
     public func read(): Int32 {
+        if (closed) {
+            throw IOException("Stream is closed")
+        }
+        if (buffer.size == 0) {
+            buffer = Array<UInt8>(Int64(byteReadBufferSize)) { _ => 0 }
+        }
         if (bufferOffset >= remainingBufferBytes) {
             remainingBufferBytes = read(buffer, 0, Int32(buffer.size))
             bufferOffset = 0
@@ -71,10 +89,13 @@ public class BrotliInputStream {
             }
         }
         bufferOffset++
-        return Int32(buffer[Int64(match (0) { case _ => bufferOffset - 1 ; bufferOffset - 1})]) & 0xFF
+        return Int32(buffer[Int64(bufferOffset - 1)])
     }
 
     public func read(destBuffer: Array<UInt8>, destOffset: Int32, destLen: Int32): Int32 {
+        if (closed) {
+            throw IOException("Stream is closed")
+        }
         var tempdestOffset = destOffset
         var tempdestLen = destLen
         if (tempdestOffset < 0) {
@@ -110,5 +131,18 @@ public class BrotliInputStream {
         } catch (ex: BrotliRuntimeException) {
             throw IOException("Brotli stream decoding failed")
         }
+    }
+
+    public func read(dest: Array<Byte>): Int64 {
+        if (closed) {
+            throw IOException("Stream is closed")
+        }
+        let safeLen = if (dest.size > Int64(Int32.Max)) {
+            Int64(Int32.Max)
+        } else {
+            dest.size
+        }
+        let len = read(dest, 0, Int32(safeLen))
+        return Int64(len)
     }
 }
