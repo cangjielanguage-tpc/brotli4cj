@@ -6,8 +6,6 @@ import std.collection.*
 import std.env.*
 import std.unittest.*
 import std.unittest.testmacro.*
-import stdx.encoding.json.*
-
 import brotli4cj.*
 
 @Test
